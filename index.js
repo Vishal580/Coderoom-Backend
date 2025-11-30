@@ -111,8 +111,8 @@ app.post("/compile", async (req, res) => {
   }
 
   // use correct env var names — ensure these exist in backend/.env
-  const clientId = process.env.jDoodle_clientId;
-  const clientSecret = process.env.jDoodle_clientSecret;
+  const clientId = process.env.jDoodle_clientId1 || process.env.jDoodle_clientId2;
+  const clientSecret = process.env.jDoodle_clientSecret1 || process.env.jDoodle_clientSecret2;
   if (!clientId || !clientSecret) {
     console.error("Missing JDoodle credentials (check backend/.env)");
     return res.status(500).json({ error: "Server configuration error" });
