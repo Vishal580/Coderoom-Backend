@@ -28,18 +28,24 @@ const languageConfig = {
   r: { versionIndex: "3" },
 };
 
+const isProduction = process.env.NODE_ENV === "production";
+
+const allowedOrigin = isProduction
+  ? process.env.PRODUCTION_URL
+  : "http://localhost:3000";
+
+const io = new Server(server, {
+  cors: {
+    origin: allowedOrigin,
+    methods: ["GET", "POST"],
+  },
+});
+
 // Enable CORS
 app.use(cors());
 
 // Parse JSON bodies
 app.use(express.json());
-
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
 
 const userSocketMap = {};
 const getAllConnectedClients = (roomId) => {
